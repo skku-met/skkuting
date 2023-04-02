@@ -1,9 +1,12 @@
 package skkumet.skkuting.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class UserMeetup {
+public class UserMeetup extends AuditingFields{
 
     @Id @GeneratedValue
     private Long id;

@@ -1,11 +1,14 @@
 package skkumet.skkuting.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity
-public class MeetupReview {
+public class MeetupReview extends AuditingFields{
 
     @Id @GeneratedValue
     private Long id;
