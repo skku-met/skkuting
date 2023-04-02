@@ -1,6 +1,8 @@
 package skkumet.skkuting.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import skkumet.skkuting.dto.constant.AppStatus;
@@ -10,9 +12,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity
-public class Meetup {
+public class Meetup extends AuditingFields{
 
     @Id
     @GeneratedValue
