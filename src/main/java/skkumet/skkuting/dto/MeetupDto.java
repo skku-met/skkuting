@@ -2,14 +2,12 @@ package skkumet.skkuting.dto;
 
 import skkumet.skkuting.domain.Meetup;
 import skkumet.skkuting.domain.MeetupReview;
-import skkumet.skkuting.domain.UserAccount;
 import skkumet.skkuting.domain.UserMeetupRel;
 import skkumet.skkuting.dto.constant.AuthorizingPolicy;
 import skkumet.skkuting.dto.constant.MeetupStatus;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 public record MeetupDto(
         Long id,
@@ -23,16 +21,14 @@ public record MeetupDto(
         String place,
         AuthorizingPolicy authorizingPolicy,
         MeetupStatus meetupStatus,
-        UserAccount host,
-        List<UserMeetupRel> userJoinedList,
-        List<MeetupReview> meetupReviewList,
+        UserAccountDto host,
         LocalDateTime createdAt,
         LocalDateTime modifiedAt,
         String createdBy,
         String modifiedBy
 ) {
-    public static MeetupDto of(Long id, String title, String content, Integer max_member, Integer min_member, LocalDateTime due_date, LocalDateTime start_date, String duration, String place, AuthorizingPolicy authorizingPolicy, MeetupStatus meetupStatus, UserAccount host, List<UserMeetupRel> userJoinedList, List<MeetupReview> meetupReviewList, LocalDateTime createdAt, LocalDateTime modifiedAt, String createdBy, String modifiedBy) {
-        return new MeetupDto(id, title, content, max_member, min_member, due_date, start_date, duration, place, authorizingPolicy, meetupStatus, host, userJoinedList, meetupReviewList, createdAt, modifiedAt, createdBy, modifiedBy);
+    public static MeetupDto of(Long id, String title, String content, Integer max_member, Integer min_member, LocalDateTime due_date, LocalDateTime start_date, String duration, String place, AuthorizingPolicy authorizingPolicy, MeetupStatus meetupStatus, UserAccountDto host, LocalDateTime createdAt, LocalDateTime modifiedAt, String createdBy, String modifiedBy) {
+        return new MeetupDto(id, title, content, max_member, min_member, due_date, start_date, duration, place, authorizingPolicy, meetupStatus, host, createdAt, modifiedAt, createdBy, modifiedBy);
     }
 
     public static MeetupDto of (String title,
@@ -45,7 +41,7 @@ public record MeetupDto(
                                 String place,
                                 AuthorizingPolicy authorizingPolicy,
                                 MeetupStatus meetupStatus,
-                                UserAccount host){
+                                UserAccountDto host){
         return MeetupDto.of(
                 null,
                 title,
@@ -59,8 +55,6 @@ public record MeetupDto(
                 authorizingPolicy,
                 meetupStatus,
                 host,
-                null,
-                null,
                 null,null,null,null);
     }
 
@@ -76,7 +70,28 @@ public record MeetupDto(
                 place,
                 authorizingPolicy,
                 meetupStatus,
-                host
+                UserAccountDto.toEntity(host)
+        );
+    }
+
+    public static MeetupDto from(Meetup meetup) {
+        return new MeetupDto(
+                meetup.getId(),
+                meetup.getTitle(),
+                meetup.getContent(),
+                meetup.getMax_member(),
+                meetup.getMin_member(),
+                meetup.getDue_date(),
+                meetup.getStart_date(),
+                meetup.getDuration(),
+                meetup.getPlace(),
+                meetup.getAuthorizingPolicy(),
+                meetup.getMeetupStatus(),
+                UserAccountDto.from(meetup.getHost()),
+                meetup.getCreatedAt(),
+                meetup.getModifiedAt(),
+                meetup.getCreatedBy(),
+                meetup.getModifiedBy()
         );
     }
 }

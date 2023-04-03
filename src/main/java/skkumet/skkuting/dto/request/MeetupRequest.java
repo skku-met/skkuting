@@ -2,6 +2,7 @@ package skkumet.skkuting.dto.request;
 
 import skkumet.skkuting.domain.UserAccount;
 import skkumet.skkuting.dto.MeetupDto;
+import skkumet.skkuting.dto.UserAccountDto;
 import skkumet.skkuting.dto.constant.AuthorizingPolicy;
 import skkumet.skkuting.dto.constant.MeetupStatus;
 
@@ -35,7 +36,7 @@ public record MeetupRequest(
                 place,
                 authorizingPolicy,
                 meetupStatus,
-                userAccount
+                UserAccountDto.from(userAccount)
         );
     }
 }
