@@ -75,6 +75,10 @@ public class Meetup extends AuditingFields {
                 duration, place, authorizingPolicy, meetupStatus, host, null, null);
     }
 
-
+    public boolean isUserJoined(String userId) {
+        return this.getUserJoinedList().stream().anyMatch(
+            o -> o.isAllowed() && o.getUserAccount().getEmail() == userId
+        );
+    }
 
 }
