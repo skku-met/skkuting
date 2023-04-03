@@ -5,8 +5,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import skkumet.skkuting.dto.constant.AppStatus;
 import skkumet.skkuting.dto.constant.AuthorizingPolicy;
+import skkumet.skkuting.dto.constant.MeetupStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 public class Meetup extends AuditingFields{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter @Column(nullable = false) private String title;
@@ -34,15 +34,15 @@ public class Meetup extends AuditingFields{
     private AuthorizingPolicy authorizingPolicy;
 
     @Enumerated(EnumType.STRING)
-    private AppStatus appStatus;
-
+    private MeetupStatus meetupStatus;
+    
     @ToString.Exclude
     @ManyToOne
     private UserAccount host;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "meetup")
-    private List<UserMeetup> userJoinedList = new ArrayList<>();
+    private List<UserMeetupRel> userJoinedList = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "meetup")

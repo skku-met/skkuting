@@ -10,11 +10,11 @@ import lombok.ToString;
 @Entity
 public class MeetupReview extends AuditingFields{
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "meetup_id")
     private Meetup meetup;
 
     @ManyToOne
