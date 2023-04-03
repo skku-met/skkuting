@@ -25,8 +25,13 @@ public class MeetupController {
 
     @PostMapping
     public void postNewMeetup(@RequestBody MeetupRequest meetupRequest){
-//        System.out.println(meetupRequest);
         meetupService.saveMeetup(meetupRequest);
     }
+
+    @PostMapping("/update")
+    public void updateMeetup(@RequestBody MeetupRequest meetupRequest) {
+
+    }
+
 
 }
