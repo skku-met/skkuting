@@ -1,17 +1,16 @@
 package skkumet.skkuting.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 @ToString
 @Entity
 public class UserAccount extends AuditingFields{
@@ -25,11 +24,14 @@ public class UserAccount extends AuditingFields{
     @Column(length = 1000) private String description;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "host")
-    private List<Meetup> hostingAppointment = new ArrayList<>();
+    @OneToMany(mappedBy = "host", fetch = FetchType.LAZY)
+    private Set<Meetup> hostingAppointment = new LinkedHashSet<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "userAccount")
-    private List<UserMeetupRel> joinedMeetupList = new ArrayList<>();
+    @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY)
+    private Set<UserMeetupRel> joinedMeetupList = new LinkedHashSet<>();
 
+    public static UserAccount of (String email, String nickname, String password, Integer studentNumber, String description) {
+        return new UserAccount(email,nickname,password,studentNumber,description,null,null);
+    }
 }
