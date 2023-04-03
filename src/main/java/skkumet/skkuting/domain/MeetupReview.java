@@ -8,7 +8,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity
-public class MeetupReview extends AuditingFields{
+public class MeetupReview extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,8 @@ public class MeetupReview extends AuditingFields{
     @ManyToOne
     private UserAccount review_to;
 
-    @Column(length = 1000) private String content;
+    @Column(length = 1000)
+    private String content;
 
     private Integer rating;
 }

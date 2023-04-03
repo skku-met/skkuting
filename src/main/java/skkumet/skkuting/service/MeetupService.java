@@ -1,10 +1,10 @@
 package skkumet.skkuting.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
 import skkumet.skkuting.domain.UserAccount;
 import skkumet.skkuting.dto.MeetupDto;
 import skkumet.skkuting.dto.request.MeetupRequest;
@@ -24,8 +24,7 @@ public class MeetupService {
     }
 
     public Page<MeetupDto> getMeetups(Pageable pageable) {
-        return meetupRepository.findAll(pageable)
-                .map(MeetupDto::from);
+        return meetupRepository.findAll(pageable).map(MeetupDto::from);
 
     }
 }

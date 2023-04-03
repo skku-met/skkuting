@@ -1,9 +1,9 @@
 debug: false
 logging:
   level:
-    skkumet.skkuting : debug
-    org.springframework.web.servlet : debug
-    org.hibernate.type.descriptor.sql : trace
+    skkumet.skkuting: debug
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql: trace
 
 spring:
   datasource:
