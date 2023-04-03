@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class UserMeetup extends AuditingFields{
+public class UserMeetupRel extends AuditingFields{
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "userAccount_email")
     private UserAccount userAccount;
 
     @ManyToOne

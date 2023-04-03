@@ -30,6 +30,6 @@ public class UserAccount extends AuditingFields{
 
     @ToString.Exclude
     @OneToMany(mappedBy = "userAccount")
-    private List<UserMeetup> joinedMeetupList = new ArrayList<>();
+    private List<UserMeetupRel> joinedMeetupList = new ArrayList<>();
 
 }
