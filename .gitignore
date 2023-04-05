@@ -153,3 +153,9 @@ Temporary Items
 build
 .gradle
 bin
+.vscode
+!devconf_sample/.vscode
+.devcontainer
+!devconf_sample/.devcontainer
+.env
+!devconf_sample/.env

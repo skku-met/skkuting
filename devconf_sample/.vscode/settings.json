@@ -1,0 +1,7 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "[java]": {
+        "editor.formatOnSave": true
+    }
+}
