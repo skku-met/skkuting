@@ -24,6 +24,9 @@ public class SignupRequestValidator implements Validator {
     public void validate(Object target, Errors errors) {
         SignupRequest request = (SignupRequest) target;
 
+        //todo
+        // @skku.edu 이메일인지 검증 로직이 필요함.
+
         checkUserDuplicate(request,errors);
         checkPasswordandPasswordConfirm(request,errors);
         checkEmailAuthCode(errors, request);
