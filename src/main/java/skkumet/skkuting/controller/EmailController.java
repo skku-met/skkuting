@@ -9,7 +9,7 @@ import skkumet.skkuting.service.EmailService;
 
 @RequiredArgsConstructor
 @RestController
-public class MailController {
+public class EmailController {
 
     private final EmailService emailService;
 

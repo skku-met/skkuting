@@ -36,3 +36,9 @@ spring:
             enable: true
             required: true
     test-connection: true
+  data:
+    redis:
+      port: 6379
+      host: localhost
+
+
