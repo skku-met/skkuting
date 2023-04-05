@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skkumet.skkuting.domain.UserAccount;
+import skkumet.skkuting.dto.UserAccountDto;
 import skkumet.skkuting.repository.UserAccountRepository;
 
 @RequiredArgsConstructor
@@ -16,5 +17,9 @@ public class UserAccountService {
 
     public UserAccount findById(String email) {
         return userAccountRepository.findById(email).get();
+    }
+
+    public void signupUserAccount(UserAccountDto dto) {
+        userAccountRepository.save(UserAccountDto.toEntity(dto));
     }
 }

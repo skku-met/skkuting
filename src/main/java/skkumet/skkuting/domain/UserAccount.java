@@ -23,7 +23,7 @@ public class UserAccount extends AuditingFields {
     @Id
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String nickname;
     @Column(nullable = false)
     private String password;
