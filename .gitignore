@@ -158,3 +158,4 @@ bin
 .devcontainer
 !devconf_sample/.devcontainer
 .env
+!devconf_sample/.env

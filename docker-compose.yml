@@ -9,7 +9,7 @@ services:
     image: mysql:latest
     restart: unless-stopped
     volumes:
-      - mysql-data:/var/lib/postgresql/data
+      - mysql-data:/var/lib/mysql
     environment:
       # NOTE: MYSQL_DB/USER/PASSWORD should match values in app container
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -17,3 +17,6 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQLX_TCP_PORT: ${MYSQLX_TCP_PORT}
+
+    ports:
+      - ${MYSQLX_TCP_PORT}:${MYSQLX_TCP_PORT}

@@ -8,6 +8,7 @@
 	],
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"overrideCommand": true,
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
