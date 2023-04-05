@@ -3,11 +3,13 @@ package skkumet.skkuting.controller;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import skkumet.skkuting.service.EmailService;
 
 @RequiredArgsConstructor
+@RequestMapping("/email")
 @RestController
 public class EmailController {
 
@@ -17,5 +19,6 @@ public class EmailController {
     public void sendEmail(@RequestParam String email) throws MessagingException {
         emailService.sendMail(email);
     }
+
 
 }

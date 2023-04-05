@@ -5,6 +5,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import skkumet.skkuting.util.RedisUtil;
 
 import java.util.Optional;
 import java.util.Random;
@@ -14,9 +15,13 @@ import java.util.Random;
 public class EmailService {
 
     private final JavaMailSender mailSender;
-    private static final String ADMIN_ADDRESS = "skkuting@naver.com";
+    private final RedisUtil redisUtil;
+//    private static final String ADMIN_ADDRESS = "skkuting@naver.com";
 
     public void sendMail(String email) throws MessagingException {
+        if (redisUtil.existData(email)) {
+            redisUtil.deleteData(email);
+        }
         MimeMessage message = createEmailForm(email);
         mailSender.send(message);
     }
@@ -27,12 +32,15 @@ public class EmailService {
         message.setFrom("linuxs79267926@gmail.com");
         message.setSubject("[skkuting 이메일 인증 요청]");
         String authCode = createCode();
+        redisUtil.setDataWithExpire(email,authCode,60*30L);
         message.setText(authCode);
         return message;
     }
 
     public boolean validateEmailCode(String email, String code) {
-        return true;
+        return Optional.ofNullable(redisUtil.getData(email))
+                .map(s -> s.equals(code))
+                .orElse(false);
     }
 
     private static String createCode() {
