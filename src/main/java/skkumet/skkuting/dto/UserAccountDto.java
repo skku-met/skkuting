@@ -14,6 +14,11 @@ public record UserAccountDto(String email, String nickname, String password, Int
                                 createdAt, modifiedAt, createdBy, modifiedBy);
         }
 
+        public static UserAccountDto of(String email, String nickname, String password) {
+                return new UserAccountDto(email, nickname, password, null, null, null, null, null, null);
+        }
+
+
         public static UserAccount toEntity(UserAccountDto dto) {
                 return UserAccount.of(dto.email(), dto.nickname(), dto.password(),
                                 dto.studentNumber(), dto.description());
