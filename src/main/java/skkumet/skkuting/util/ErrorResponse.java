@@ -22,4 +22,12 @@ public class ErrorResponse {
                 .build();
     }
 
+    public static ErrorResponse of (Integer status, String code, String description) {
+        return new ErrorResponseBuilder()
+                .status(status)
+                .code(code)
+                .description(description)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
 }
