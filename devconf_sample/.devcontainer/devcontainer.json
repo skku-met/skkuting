@@ -1,0 +1,40 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/java-postgres
+{
+	"name": "Java & MySQL",
+	"dockerComposeFile": [
+		"${localWorkspaceFolder}/docker-compose.yml",
+		"${localWorkspaceFolder}/.devcontainer/docker-compose.yml"
+	],
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or with the host.
+	// "forwardPorts": [5432],
+
+	// Configure tool-specific properties.
+	"customizations": {
+	  // Configure properties specific to VS Code.
+	  "vscode": {
+		// Set *default* container specific settings.json values on container create.
+		"settings": {},
+		"extensions": [
+		  "vscjava.vscode-java-pack",
+		  "vscjava.vscode-spring-initializr",
+		  "vscjava.vscode-gradle",
+		  "vmware.vscode-boot-dev-pack",
+		  "github.vscode-pull-request-github",
+		  "eamodio.gitlens",
+		  "donjayamanne.githistory",
+		  "alexcvzz.vscode-sqlite",
+		  "mtxr.sqltools-driver-mysql"
+		]
+	  }
+	}
+}

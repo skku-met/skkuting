@@ -6,10 +6,12 @@ logging:
     org.hibernate.type.descriptor.sql: trace
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:mysql://localhost:3306/skkuting
-    username: wook2
-    password: wook2wook2
+    url: jdbc:mysql://localhost:3306/${MYSQL_DATABASE}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     defer-datasource-initialization: true
