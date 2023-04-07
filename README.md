@@ -42,3 +42,5 @@ Spring Boot
 
 - 📙 [3/28 정책 수립 및 ERD 작성]( https://www.notion.so/3-28-ERD-baca9ebb97b74d8eb2b5874e67fd7a49?pvs=4 )
 - 📋 [4/2 Issue #5 - 물리 테이블 및 도메인 생성]( https://www.notion.so/4-2-Issue-5-8c76bcf617a84a5d810eb24c1cde9a15?pvs=4 )
+- 📙 [4/4 Issue #1 - 이메일 인증]( https://www.notion.so/4-4-Issue-1-daca4079d7a34fa0ab5ef1f737d7a496?pvs=4 )
+- 📙 [4/5 Issue #1 - 이메일 인증 코드 검증 서버 구현]( https://www.notion.so/4-5-Issue-1-551c5b2e9e1c42d9b5c633dcf093a19d?pvs=4 )
