@@ -49,4 +49,8 @@ public class UserAccount extends AuditingFields {
             Integer studentNumber, String description) {
         return new UserAccount(email, nickname, password, studentNumber, description, null, null);
     }
+
+    public static UserAccount of(String email) {
+        return new UserAccount(email, null, null, null, null, null, null);
+    }
 }
