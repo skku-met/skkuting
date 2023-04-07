@@ -11,12 +11,23 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      # NOTE: MYSQL_DB/USER/PASSWORD should match values in app container
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_TCP_PORT: ${MYSQL_TCP_PORT}
       MYSQLX_TCP_PORT: ${MYSQLX_TCP_PORT}
 
     ports:
+      - ${MYSQL_TCP_PORT}:${MYSQL_TCP_PORT}
       - ${MYSQLX_TCP_PORT}:${MYSQLX_TCP_PORT}
+
+
+  cache:
+    container_name: skkuting_cache
+    image: redis:latest
+    restart: unless-stopped
+    command: redis-server --port ${REDIS_PORT}
+
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}

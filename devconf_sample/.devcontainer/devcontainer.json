@@ -1,15 +1,15 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/java-postgres
 {
-	"name": "Java & MySQL",
+	"name": "Java & MySQL + Redis",
 	"dockerComposeFile": [
 		"${localWorkspaceFolder}/docker-compose.yml",
 		"${localWorkspaceFolder}/.devcontainer/docker-compose.yml"
 	],
-	"service": "app",
+	"service": "devcontainer",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"postCreateCommand": "pre-commit install",
 	"overrideCommand": true,
-
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
@@ -17,7 +17,7 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or with the host.
-	// "forwardPorts": [5432],
+	"forwardPorts": ["db:${localEnv.MYSQL_TCP_PORT}", "cache:${localEnv.REDIS_PORT}"],
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -34,7 +34,8 @@
 		  "eamodio.gitlens",
 		  "donjayamanne.githistory",
 		  "alexcvzz.vscode-sqlite",
-		  "mtxr.sqltools-driver-mysql"
+		  "mtxr.sqltools-driver-mysql",
+		  "dunn.redis"
 		]
 	  }
 	}
