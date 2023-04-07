@@ -42,5 +42,8 @@ spring:
     redis:
       port: 6379
       host: localhost
+  jwt:
+    secretKey: wook2
+
 
 
