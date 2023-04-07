@@ -1,5 +1,6 @@
 package skkumet.skkuting.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +12,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import skkumet.skkuting.dto.UserAccountDto;
 import skkumet.skkuting.dto.UserAccountPrincipal;
 import skkumet.skkuting.repository.UserAccountRepository;
+import skkumet.skkuting.util.JwtAuthenticationFilter;
+import skkumet.skkuting.util.JwtTokenProvider;
 
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
 
+    private final JwtTokenProvider jwtTokenProvider;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
@@ -27,7 +33,7 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .addFilterBefore()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
     @Bean
