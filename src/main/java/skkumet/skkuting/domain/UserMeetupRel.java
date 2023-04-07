@@ -1,5 +1,6 @@
 package skkumet.skkuting.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,16 +26,12 @@ public class UserMeetupRel extends AuditingFields {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userAccountId;
-
     @ManyToOne
-    @JoinColumn(name = "userAccountId")
+    @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
 
-    private Long meetupId;
-
     @ManyToOne
-    @JoinColumn(name = "meetupId")
+    @JoinColumn(name = "meetup_id")
     private Meetup meetup;
 
     private boolean isAllowed;

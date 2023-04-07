@@ -20,25 +20,22 @@ import lombok.ToString;
 @Entity
 @Getter
 @Builder
-public class MeetupReview extends AuditingFields{
+public class MeetupReview extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "meetup_id")
     private Meetup meetup;
 
-    private String reviewRecipientId;
-
     @ManyToOne
-    @JoinColumn(name = "reviewRecipientId")
+    @JoinColumn(name = "review_recipient_id")
     private UserAccount reviewRecipient;
 
-    private String reviewSenderId;
-
     @ManyToOne
-    @JoinColumn(name = "reviewSenderId")
+    @JoinColumn(name = "review_sender_id")
     private UserAccount reviewSender;
 
     @Column(length = 1000)

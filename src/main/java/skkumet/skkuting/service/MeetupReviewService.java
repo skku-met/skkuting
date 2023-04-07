@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import skkumet.skkuting.domain.Meetup;
-import skkumet.skkuting.dto.CreateMeetupReviewDto;
+import skkumet.skkuting.domain.MeetupReview;
+import skkumet.skkuting.dto.CreateMeetupReviewInputDto;
 import skkumet.skkuting.repository.MeetupRepository;
 import skkumet.skkuting.repository.MeetupReviewRepository;
+import skkumet.skkuting.util.DomainException;
+import skkumet.skkuting.util.errorcode.MeetupReviewErrorCode;
 
 @Service
 @Transactional
@@ -18,29 +21,31 @@ public class MeetupReviewService {
     @Autowired
     MeetupRepository meetupRepository;
 
-    public CreateMeetupReviewDto.Success createReview(CreateMeetupReviewDto.Input dto) throws CreateMeetupReviewDto.Failed {
+    public MeetupReview createReview(CreateMeetupReviewInputDto dto)
+            throws DomainException {
+        if (dto.reviewRecipientId() == dto.reviewSenderId()) {
+            throw new DomainException(MeetupReviewErrorCode.SELF_REVIEW_NOT_ALLOWED);
+        }
 
-        Meetup meetup = meetupRepository.findById(dto.getMeetupId()).orElseThrow(
-            () -> new CreateMeetupReviewDto.Failed("Meetup not found.")
-        );
+        Meetup meetup = meetupRepository.findById(dto.meetupId()).orElseThrow(
+                () -> new DomainException(MeetupReviewErrorCode.MEETUP_NOT_EXIST));
 
         // 사용자 밋업 참가 여부 확인
-        if (!meetup.isUserJoined(dto.getReviewSenderId())) {
-            throw new CreateMeetupReviewDto.Failed("User not joined meetup.");
+        if (!meetup.isUserJoined(dto.reviewSenderId())) {
+            throw new DomainException(MeetupReviewErrorCode.USER_NOT_JOINED_MEETUP);
         }
 
         // 리뷰 대상 밋업 참가 여부 확인
-        if (!meetup.isUserJoined(dto.getReviewRecipientId())) {
-            throw new CreateMeetupReviewDto.Failed("Recipient user not joined meetup.");
+        if (!meetup.isUserJoined(dto.reviewRecipientId())) {
+            throw new DomainException(MeetupReviewErrorCode.RECIPIENT_NOT_JOINED_MEETUP);
         }
 
         // 이미 리뷰가 작성되었는지 확인
-        if (meetupReviewRepository.checkAlreadyCreated(dto.getMeetupId(), dto.getReviewSenderId(), dto.getReviewRecipientId())) {
-            throw new CreateMeetupReviewDto.Failed("Already review created.");
+        if (meetupReviewRepository.checkAlreadyCreated(dto.meetupId(), dto.reviewSenderId(),
+                dto.reviewRecipientId())) {
+            throw new DomainException(MeetupReviewErrorCode.ALREADY_CREATED_REVIEW);
         }
 
-        return CreateMeetupReviewDto.Success.fromEntity(
-            meetupReviewRepository.save(dto.toEntity())
-        );
+        return meetupReviewRepository.save(dto.toEntity());
     }
 }
