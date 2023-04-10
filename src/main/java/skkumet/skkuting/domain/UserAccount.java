@@ -21,9 +21,10 @@ import lombok.ToString;
 public class UserAccount extends AuditingFields {
 
     @Id
+    @Column(length = 200)
     private String email;
 
-    @Column
+    @Column(unique = true)
     private String nickname;
     @Column(nullable = false)
     private String password;
