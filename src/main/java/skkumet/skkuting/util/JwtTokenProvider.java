@@ -70,7 +70,11 @@ public class JwtTokenProvider {
 
     public boolean validateTokenExpiration(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(encodedSecretKey()).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts
+                    .parserBuilder()
+                            .setSigningKey(encodedSecretKey())
+                            .build()
+                            .parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         } catch(Exception e) {
             return false;
@@ -79,8 +83,10 @@ public class JwtTokenProvider {
 
     public String getUserEmail(String token) {
         try {
-            return Jwts.parser()
+            return Jwts.
+                    parserBuilder()
                     .setSigningKey(encodedSecretKey())
+                    .build()
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();

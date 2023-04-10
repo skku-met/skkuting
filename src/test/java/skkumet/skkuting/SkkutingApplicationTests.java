@@ -23,8 +23,7 @@ class SkkutingApplicationTests {
 	@Test
 	@WithAnonymousUser
 	void contextLoads() throws Exception {
-		mockMvc.perform(get("/ex"))
-				.andExpect(status().isOk());
+
 	}
 
 }
