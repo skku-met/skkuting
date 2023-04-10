@@ -26,7 +26,7 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    private MimeMessage createEmailForm(String email) throws MessagingException {
+    public MimeMessage createEmailForm(String email) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         message.addRecipients(MimeMessage.RecipientType.TO, email);
         message.setFrom("linuxs79267926@gmail.com");
