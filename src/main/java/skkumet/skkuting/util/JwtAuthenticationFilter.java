@@ -6,12 +6,14 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Component
@@ -22,8 +24,19 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
-        String token = jwtTokenProvider.resolveToken(req);
-        Optional.ofNullable(token)
+        String accessToken = jwtTokenProvider.resolveToken(req);
+        String refreshToken = jwtTokenProvider.resolveRefreshToken(req);
+
+        if (!jwtTokenProvider.validateTokenExpiration(accessToken)) {
+            if (jwtTokenProvider.validateTokenExpiration(refreshToken)) {
+                Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
+                TokenInfo tokenObject = jwtTokenProvider.createTokenObject(authentication);
+                accessToken = tokenObject.accessCode();
+                refreshToken = tokenObject.refreshCode();
+            }
+        }
+
+        Optional.ofNullable(accessToken)
                 .filter(jwtTokenProvider::validateTokenExpiration)
                 .map(jwtTokenProvider::getAuthentication)
                 .ifPresent(SecurityContextHolder.getContext()::setAuthentication);
