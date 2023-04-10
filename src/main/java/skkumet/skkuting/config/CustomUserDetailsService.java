@@ -1,12 +1,12 @@
 package skkumet.skkuting.config;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 import skkumet.skkuting.dto.UserAccountDto;
 import skkumet.skkuting.dto.UserAccountPrincipal;
 import skkumet.skkuting.repository.UserAccountRepository;
