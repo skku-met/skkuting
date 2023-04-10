@@ -55,17 +55,18 @@ public class JwtTokenProvider {
 
         Claims claims = Jwts.claims().setSubject(authentication.getName());
         claims.put("auth", authorities);
-        String w = Optional.of(Jwts.builder()
+        return Optional.of(Jwts.builder()
                         .setClaims(claims)
                         .setExpiration(new Date(new Date().getTime() + expiration))
                         .signWith(encodedSecretKey(), SignatureAlgorithm.HS256)
                         .compact())
                         .orElseThrow();
-        System.out.println(w);
-        return w;
     }
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("X-AUTH-TOKEN");
+    }
+    public String resolveRefreshToken(HttpServletRequest request) {
+        return request.getHeader("X-AUTH-REFRESH-TOKEN");
     }
 
     public boolean validateTokenExpiration(String token) {
