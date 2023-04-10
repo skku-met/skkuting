@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import skkumet.skkuting.dto.request.LoginRequest;
 import skkumet.skkuting.dto.request.SignupRequest;
 import skkumet.skkuting.service.UserAccountService;
 import skkumet.skkuting.util.ErrorCode;
+import skkumet.skkuting.util.TokenInfo;
 import skkumet.skkuting.util.exception.User.UserSignupException;
 
 @RequiredArgsConstructor
@@ -24,6 +26,11 @@ public class UserAccountController {
         }
         userAccountService.signupUserAccount(signupRequest.toDto());
         return ResponseEntity.ok().body("ok");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenInfo> login(@RequestBody LoginRequest loginRequest) {
+        return userAccountService.loginMember(loginRequest);
     }
 
 }

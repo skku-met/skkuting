@@ -43,7 +43,19 @@ spring:
       port: 6379
       host: localhost
   jwt:
-    secretKey: wook2
+    secretKey: bcmoirmiweroncvocnioaenoasekasvsdrswewaa
 
+---
 
+spring:
+  config.activate.on-profile: testdb
+  datasource:
+    url: jdbc:h2:mem:testdb;mode=mysql
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql.init.mode : always
+  h2:
+    console:
+      enabled: true
 
