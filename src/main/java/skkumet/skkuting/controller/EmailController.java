@@ -2,6 +2,7 @@ package skkumet.skkuting.controller;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,8 +17,9 @@ public class EmailController {
     private final EmailService emailService;
 
     @GetMapping("/authcode")
-    public void sendEmail(@RequestParam String email) throws MessagingException {
+    public ResponseEntity<String> sendEmail(@RequestParam String email) throws MessagingException {
         emailService.sendMail(email);
+        return ResponseEntity.ok().body("ok");
     }
 
 
