@@ -6,24 +6,28 @@
 - Java 17
 - Spring Boot 3.0.5
 - gradle 7.6.1
+- PostMan
 
 ### 개발환경 셋업
-1. 개발 설정파일 셋업 (커스텀 가능, but 권장하지 않음)
+1. 개발 설정파일 셋업
+    1. .env 파일에서 개인별 Gmail SMTP 설정 필수.
+    2. 그 외 커스텀은 권장하지 않음
     ```shell
     ./scripts/setup.sh
     ```
+
 2. 실행
-   1. docker-compose 단독
-      ```shell
-      # 애플리케이션 포함한 전체 실행
-      docker-compose -f docker-compose.yml -f .devcontainer/docker-compose.yml up
-      # DB만 실행 후 애플리케이션은 별개 실행
-      docker-compose up
-      gradle bootRun
-      ````
+    1. docker-compose 단독
+        ```shell
+        # 애플리케이션 포함한 전체 실행
+        docker-compose -f docker-compose.yml -f .devcontainer/docker-compose.yml up
+        # DB만 실행 후 애플리케이션은 별개 실행
+        docker-compose up
+        gradle bootRun
+        ````
     2. vscode : 일반 실행 혹은 devcontainer로 실행 가능
     3. intellij : 일반 실행 혹은 docker-compose로 실행 가능
-       - docker-compose 실행 시 일반 실행의 docker-compose 파일 두개를 지정해야 함
+        - docker-compose 실행 시 일반 실행의 docker-compose 파일 두개를 지정해야 함
 
 ## 기술 세부 스택
 
