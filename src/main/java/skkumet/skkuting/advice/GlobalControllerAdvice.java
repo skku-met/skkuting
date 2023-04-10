@@ -1,20 +1,21 @@
 package skkumet.skkuting.advice;
 
+import java.util.stream.Collectors;
+
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import skkumet.skkuting.util.ErrorCode;
-import skkumet.skkuting.util.ErrorResponse;
-import skkumet.skkuting.util.exception.User.UserSignupException;
 
-import java.util.stream.Collectors;
+import skkumet.skkuting.util.DomainException;
+import skkumet.skkuting.util.ErrorResponse;
+import skkumet.skkuting.util.errorcode.CommonErrorCode;
 
 @RestControllerAdvice
 public class GlobalControllerAdvice {
 
-    @ExceptionHandler(UserSignupException.class)
-    public ErrorResponse handleUserDuplicatedException(UserSignupException e) {
+    @ExceptionHandler(DomainException.class)
+    public ErrorResponse handleUserDuplicatedException(DomainException e) {
         return ErrorResponse.of(e.getErrorCode());
     }
 
@@ -25,11 +26,8 @@ public class GlobalControllerAdvice {
                 .collect(Collectors.joining(", "));
         return ErrorResponse.of(
                 e.getStatusCode().value(),
-                ErrorCode.INVALID_INPUT_VALUE.getCode(),
-                errorDescription
-        );
+                CommonErrorCode.INVALID_INPUT_VALUE.getCode(),
+                errorDescription);
     }
-
-
 
 }
