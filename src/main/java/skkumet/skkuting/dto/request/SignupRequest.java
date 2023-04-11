@@ -19,8 +19,8 @@ public record SignupRequest(
     public UserAccountDto toDto() {
         return UserAccountDto.of(
                 email,
-                password,
-                nickname
+                nickname,
+                password
         );
     }
 

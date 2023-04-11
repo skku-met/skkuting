@@ -13,7 +13,6 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Component
@@ -27,8 +26,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String accessToken = jwtTokenProvider.resolveToken(req);
         String refreshToken = jwtTokenProvider.resolveRefreshToken(req);
 
-        if (!jwtTokenProvider.validateTokenExpiration(accessToken)) {
-            if (jwtTokenProvider.validateTokenExpiration(refreshToken)) {
+        if (accessToken != null  && !jwtTokenProvider.validateTokenExpiration(accessToken)) {
+            if (refreshToken != null && jwtTokenProvider.validateTokenExpiration(refreshToken)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
                 TokenInfo tokenObject = jwtTokenProvider.createTokenObject(authentication);
                 accessToken = tokenObject.accessCode();
