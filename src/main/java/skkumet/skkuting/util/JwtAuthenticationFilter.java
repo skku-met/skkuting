@@ -26,7 +26,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String accessToken = jwtTokenProvider.resolveToken(req);
         String refreshToken = jwtTokenProvider.resolveRefreshToken(req);
 
-        if (accessToken != null  && !jwtTokenProvider.validateTokenExpiration(accessToken)) {
+        if (accessToken != null  && jwtTokenProvider.validateTokenExpiration(accessToken)) {
             if (refreshToken != null && jwtTokenProvider.validateTokenExpiration(refreshToken)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
                 TokenInfo tokenObject = jwtTokenProvider.createTokenObject(authentication);
@@ -35,10 +35,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             }
         }
 
-        Optional.ofNullable(accessToken)
+        Optional<Authentication> authentication = Optional.ofNullable(accessToken)
                 .filter(jwtTokenProvider::validateTokenExpiration)
-                .map(jwtTokenProvider::getAuthentication)
-                .ifPresent(SecurityContextHolder.getContext()::setAuthentication);
+                .map(jwtTokenProvider::getAuthentication);
+        authentication.ifPresent(SecurityContextHolder.getContext()::setAuthentication);
         chain.doFilter(request,response);
     }
 }

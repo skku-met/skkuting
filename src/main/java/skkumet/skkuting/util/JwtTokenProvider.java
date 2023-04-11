@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import skkumet.skkuting.dto.UserAccountPrincipal;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -107,7 +108,7 @@ public class JwtTokenProvider {
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get("auth").toString().split(","))
                         .map(SimpleGrantedAuthority::new).toList();
-        return new UsernamePasswordAuthenticationToken(claims.getSubject(),"", authorities);
+        return new UsernamePasswordAuthenticationToken(UserAccountPrincipal.of(claims.getSubject()),"", authorities);
     }
     private Claims parseClaims(String accessToken) {
         try {

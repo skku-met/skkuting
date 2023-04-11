@@ -32,6 +32,9 @@ public record UserAccountPrincipal(
                         .collect(Collectors.toUnmodifiableSet())
         );
     }
+    public static UserAccountPrincipal of(String email) {
+        return UserAccountPrincipal.of(email, null, null, null, null);
+    }
 
     public static UserAccountPrincipal from (UserAccountDto dto) {
         return UserAccountPrincipal.of(
