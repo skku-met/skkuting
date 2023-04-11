@@ -12,8 +12,7 @@ import skkumet.skkuting.dto.UserAccountPrincipal;
 public class exController {
 
     @GetMapping("/ex")
-    public String getException(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
-        System.out.println(userAccountPrincipal);
+    public String getException() {
         log.info("hello ex controller");
         return "Hello this";
     }

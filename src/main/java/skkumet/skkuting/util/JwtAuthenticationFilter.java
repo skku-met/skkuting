@@ -35,10 +35,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             }
         }
 
-        Optional<Authentication> authentication = Optional.ofNullable(accessToken)
+        Optional.ofNullable(accessToken)
                 .filter(jwtTokenProvider::validateTokenExpiration)
-                .map(jwtTokenProvider::getAuthentication);
-        authentication.ifPresent(SecurityContextHolder.getContext()::setAuthentication);
+                .map(jwtTokenProvider::getAuthentication)
+                .ifPresent(SecurityContextHolder.getContext()::setAuthentication);
         chain.doFilter(request,response);
     }
 }
