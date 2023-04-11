@@ -1,13 +1,25 @@
 package skkumet.skkuting.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity
+@Getter
+@Builder
 public class MeetupReview extends AuditingFields {
 
     @Id
@@ -15,13 +27,16 @@ public class MeetupReview extends AuditingFields {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "meetup_id")
     private Meetup meetup;
 
     @ManyToOne
-    private UserAccount review_from;
+    @JoinColumn(name = "review_recipient_id")
+    private UserAccount reviewRecipient;
 
     @ManyToOne
-    private UserAccount review_to;
+    @JoinColumn(name = "review_sender_id")
+    private UserAccount reviewSender;
 
     @Column(length = 1000)
     private String content;
