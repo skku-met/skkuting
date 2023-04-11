@@ -1,16 +1,19 @@
 package skkumet.skkuting.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import skkumet.skkuting.dto.UserAccountPrincipal;
 
 @Slf4j
 @RestController
 public class exController {
 
     @GetMapping("/ex")
-    public String getException() {
+    public String getException(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
+        System.out.println(userAccountPrincipal);
         log.info("hello ex controller");
         return "Hello this";
     }
