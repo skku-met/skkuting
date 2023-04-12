@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import skkumet.skkuting.domain.UserAccount;
 import skkumet.skkuting.dto.MeetupDto;
 import skkumet.skkuting.dto.UserAccountPrincipal;
 import skkumet.skkuting.dto.request.CreateMeetupRequest;
@@ -48,7 +47,7 @@ public class MeetupController {
     }
 
     @PostMapping("/{meetupId}/close_recruit")
-    public void closeRecruit(@PathVariable Long meetupId, UserAccount user) {
-        meetupService.closeRecruit(meetupId, user);
+    public void closeRecruit(@PathVariable Long meetupId, @AuthenticationPrincipal UserAccountPrincipal user) {
+        meetupService.closeRecruit(meetupId, user.email());
     }
 }

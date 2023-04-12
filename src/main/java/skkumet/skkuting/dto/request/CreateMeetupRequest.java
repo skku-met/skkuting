@@ -2,16 +2,11 @@ package skkumet.skkuting.dto.request;
 
 import java.time.LocalDateTime;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,8 +35,9 @@ public class CreateMeetupRequest {
     @NotNull
     String duration;
     String place;
-    @NotNull
-    AuthorizingPolicy authorizingPolicy;
+
+    @Builder.Default
+    AuthorizingPolicy authorizingPolicy = AuthorizingPolicy.AUTO;
 
     public CreateMeetupInputDto toDto(String userId) {
         return CreateMeetupInputDto.builder()

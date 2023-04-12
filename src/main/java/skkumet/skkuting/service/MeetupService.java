@@ -34,10 +34,10 @@ public class MeetupService {
         return meetupRepository.findAll(pageable).map(MeetupDto::from);
     }
 
-    public void closeRecruit(Long meetupId, UserAccount host) {
+    public void closeRecruit(Long meetupId, String userId) {
         Meetup meetup = meetupRepository.findById(meetupId).orElseThrow(
                 () -> new DomainException(MeetupErrorCode.MEETUP_NOT_EXIST));
 
-        meetup.closeRecruitByHost(host);
+        meetup.closeRecruitByHost(UserAccount.of(userId));
     }
 }
