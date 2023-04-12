@@ -20,7 +20,8 @@ public record CreateMeetupInputDto(
         AuthorizingPolicy authorizingPolicy) {
 
     public Meetup toEntity() {
-        return Meetup.buildWithHost(UserAccount.of(host))
+        return Meetup.builder()
+                .host(UserAccount.of(host))
                 .title(title)
                 .content(content)
                 .maxMember(maxMember)

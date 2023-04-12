@@ -1,6 +1,7 @@
 package skkumet.skkuting.domain;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,18 @@ public class MeetupTest {
     private final UserAccount host = UserAccount.builder().email("host@meetup.com").build();
     private final UserAccount notHost = UserAccount.builder().email("notHost@meetup.com").build();
 
+    Meetup.MeetupBuilder builderWithHost() {
+        Set<UserMeetupRel> list = Set.of(
+                UserMeetupRel.builder().userAccount(host).isAllowed(true).build());
+
+        return Meetup.builder()
+                .host(host)
+                .userJoinedList(list);
+    }
+
     @Test
     void testCreateMeetup() {
-        Meetup meetup = Meetup.buildWithHost(host)
-                .build();
+        Meetup meetup = builderWithHost().build();
 
         // 호스트는 반드시 모임에 참여한 유저여야 함
         Assertions.assertThat(
@@ -30,7 +39,7 @@ public class MeetupTest {
     @Test
     void testCloseRecruit() {
         // 열린 모임은 닫아야 함
-        Meetup meetup = Meetup.buildWithHost(host).meetupStatus(MeetupStatus.OPEN).build();
+        Meetup meetup = builderWithHost().meetupStatus(MeetupStatus.OPEN).build();
         meetup.closeRecruitByHost(host);
 
         Assertions.assertThat(meetup.getMeetupStatus()).isEqualTo(MeetupStatus.CLOSE);
@@ -46,7 +55,7 @@ public class MeetupTest {
         // @formatter:off
         Assertions.assertThat(
             list.stream().map(
-                    (o) -> Meetup.buildWithHost(host).meetupStatus(o).build()
+                    (o) -> builderWithHost().meetupStatus(o).build()
                 ).allMatch(
                     (o) -> {
                         MeetupStatus origin = o.getMeetupStatus();

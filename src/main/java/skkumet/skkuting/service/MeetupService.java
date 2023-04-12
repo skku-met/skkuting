@@ -21,9 +21,13 @@ import skkumet.skkuting.util.errorcode.MeetupErrorCode;
 public class MeetupService {
 
     private final MeetupRepository meetupRepository;
+    private final UserMeetupRelService meetupRelService;
 
     public CreateMeetupOutputDto createMeetup(CreateMeetupInputDto dto) {
-        return CreateMeetupOutputDto.fromEntity(meetupRepository.save(dto.toEntity()));
+        Meetup meetup = dto.toEntity();
+        meetupRepository.save(meetup);
+        meetupRelService.createHostRel(meetup);
+        return CreateMeetupOutputDto.fromEntity(meetup);
     }
 
     public Page<MeetupDto> getMeetups(Pageable pageable) {

@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import skkumet.skkuting.dto.UserAccountPrincipal;
 
 @Slf4j
 @RestController

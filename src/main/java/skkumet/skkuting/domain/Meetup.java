@@ -77,13 +77,6 @@ public class Meetup extends AuditingFields {
                 duration, place, authorizingPolicy, meetupStatus, host, null, null);
     }
 
-    public static MeetupBuilder buildWithHost(UserAccount host) {
-        UserMeetupRel hostRel = UserMeetupRel.builder().userAccount(host).isAllowed(true).build();
-        Set<UserMeetupRel> initList = new LinkedHashSet<UserMeetupRel>();
-        initList.add(hostRel);
-        return Meetup.builder().host(host).userJoinedList(initList);
-    }
-
     public void setHost(UserAccount host) {
         this.host = host;
         if (!this.userJoinedList.isEmpty()) {
