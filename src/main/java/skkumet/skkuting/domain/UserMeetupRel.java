@@ -27,7 +27,7 @@ public class UserMeetupRel extends AuditingFields {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_account_id")
+    @JoinColumn(name = "user_account_email")
     private UserAccount userAccount;
 
     @ManyToOne
