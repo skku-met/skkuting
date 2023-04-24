@@ -4,6 +4,7 @@ logging:
     skkumet.skkuting: debug
     org.springframework.web.servlet: debug
     org.hibernate.type.descriptor.sql: trace
+    org.springframework.security: debug
 
 spring:
   config:

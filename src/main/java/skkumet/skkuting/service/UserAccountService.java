@@ -43,13 +43,13 @@ public class UserAccountService {
                 dto.nickname(),
                 passwordEncoder.encode(dto.password()),
                 dto.studentNumber(),
-                dto.description()
-        );
+                dto.description());
         userAccountRepository.save(userAccount);
     }
 
     public ResponseEntity<TokenInfo> loginMember(LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.email(),
+                loginRequest.password());
         Authentication authenticate = authenticationManagerBuilder.getObject().authenticate(token);
         TokenInfo tokenInfo = jwtTokenProvider.createTokenObject(authenticate);
         return ResponseEntity.ok(tokenInfo);

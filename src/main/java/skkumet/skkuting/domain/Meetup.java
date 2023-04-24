@@ -3,6 +3,7 @@ package skkumet.skkuting.domain;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,6 +23,8 @@ import lombok.Setter;
 import lombok.ToString;
 import skkumet.skkuting.dto.constant.AuthorizingPolicy;
 import skkumet.skkuting.dto.constant.MeetupStatus;
+import skkumet.skkuting.util.DomainException;
+import skkumet.skkuting.util.errorcode.MeetupErrorCode;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,10 +44,9 @@ public class Meetup extends AuditingFields {
     @Setter
     @Column(nullable = false, length = 10000)
     private String content;
-    private Integer max_member;
-    private Integer min_member;
-    private LocalDateTime due_date;
-    private LocalDateTime start_date;
+    private Integer maxMember;
+    private Integer minMember;
+    private LocalDateTime startDate;
     private String duration;
     private String place;
 
@@ -69,16 +71,31 @@ public class Meetup extends AuditingFields {
     private Set<MeetupReview> meetupReviewList = new LinkedHashSet<>();
 
     public static Meetup of(String title, String content, Integer max_member, Integer min_member,
-            LocalDateTime due_date, LocalDateTime start_date, String duration, String place,
+            LocalDateTime start_date, String duration, String place,
             AuthorizingPolicy authorizingPolicy, MeetupStatus meetupStatus, UserAccount host) {
-        return new Meetup(null, title, content, max_member, min_member, due_date, start_date,
+        return new Meetup(null, title, content, max_member, min_member, start_date,
                 duration, place, authorizingPolicy, meetupStatus, host, null, null);
+    }
+
+    public void setHost(UserAccount host) {
+        this.host = host;
+        if (!this.userJoinedList.isEmpty()) {
+            throw new RuntimeException("밋업 호스트는 최초 설정 이후 변경 불가능.");
+        }
+        this.userJoinedList.add(
+                UserMeetupRel.builder().userAccount(host).isAllowed(true).build());
     }
 
     public boolean isUserJoined(String userId) {
         return this.getUserJoinedList().stream().anyMatch(
-            o -> o.isAllowed() && o.getUserAccount().getEmail() == userId
-        );
+                o -> o.isAllowed() && o.getUserAccount().getEmail() == userId);
     }
 
+    public void closeRecruitByHost(UserAccount host) {
+        if (!this.getHost().equals(host)) {
+            throw new DomainException(MeetupErrorCode.NOT_MEETUP_HOST);
+        } else if (this.meetupStatus == MeetupStatus.OPEN) {
+            this.meetupStatus = MeetupStatus.CLOSE;
+        }
+    }
 }
