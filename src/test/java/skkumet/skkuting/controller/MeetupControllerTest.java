@@ -3,7 +3,6 @@ package skkumet.skkuting.controller;
 import java.time.LocalDateTime;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -14,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import skkumet.skkuting.dto.MeetupDetailOutputDto;
 import skkumet.skkuting.dto.constant.AuthorizingPolicy;
 import skkumet.skkuting.dto.request.CreateMeetupRequest;
 import skkumet.skkuting.dto.response.CreateMeetupResponse;
@@ -29,6 +29,23 @@ public class MeetupControllerTest {
 
     public String getBaseUri() {
         return "http://localhost:" + this.port;
+    }
+
+    @Test
+    public void testGetMeetupDetail() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        ResponseEntity<MeetupDetailOutputDto> resExists = restTemplate.getForEntity(getBaseUri() + "/1",
+                MeetupDetailOutputDto.class);
+
+        Assertions.assertThat(resExists.getStatusCode().is2xxSuccessful());
+
+        // 없는 모임
+        ResponseEntity<MeetupDetailOutputDto> resNotExists = restTemplate.getForEntity(getBaseUri() + "/99999999",
+                MeetupDetailOutputDto.class);
+
+        Assertions.assertThat(resNotExists.getStatusCode().is4xxClientError());
     }
 
     @Test

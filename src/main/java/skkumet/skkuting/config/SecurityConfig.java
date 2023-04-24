@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .httpBasic().disable()
                 .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/meetup/{meetupId}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/email/authcode").permitAll()
                 .requestMatchers(HttpMethod.POST, "/login", "/signup").permitAll()
                 .requestMatchers(HttpMethod.GET, "/ex").permitAll()
@@ -41,6 +42,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {return PasswordEncoderFactories.createDelegatingPasswordEncoder();}
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
 }

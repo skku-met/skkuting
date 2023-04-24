@@ -10,6 +10,7 @@ import skkumet.skkuting.domain.Meetup;
 import skkumet.skkuting.domain.UserAccount;
 import skkumet.skkuting.dto.CreateMeetupInputDto;
 import skkumet.skkuting.dto.CreateMeetupOutputDto;
+import skkumet.skkuting.dto.MeetupDetailOutputDto;
 import skkumet.skkuting.dto.MeetupDto;
 import skkumet.skkuting.repository.MeetupRepository;
 import skkumet.skkuting.util.DomainException;
@@ -28,6 +29,13 @@ public class MeetupService {
         meetupRepository.save(meetup);
         meetupRelService.createHostRel(meetup);
         return CreateMeetupOutputDto.fromEntity(meetup);
+    }
+
+    public MeetupDetailOutputDto getMeetupDetail(Long meetupId) {
+        Meetup meetup = meetupRepository.findById(meetupId).orElseThrow(
+                () -> new DomainException(MeetupErrorCode.MEETUP_NOT_EXIST));
+
+        return MeetupDetailOutputDto.fromEntity(meetup);
     }
 
     public Page<MeetupDto> getMeetups(Pageable pageable) {

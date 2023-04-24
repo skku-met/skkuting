@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import skkumet.skkuting.dto.MeetupDetailOutputDto;
 import skkumet.skkuting.dto.MeetupDto;
 import skkumet.skkuting.dto.UserAccountPrincipal;
 import skkumet.skkuting.dto.request.CreateMeetupRequest;
@@ -39,6 +40,12 @@ public class MeetupController {
         CreateMeetupResponse res = CreateMeetupResponse.fromDto(
                 meetupService.createMeetup(meetupRequest.toDto(principal.email())));
         return new Response<CreateMeetupResponse>(res, SuccessCode.SUCCESS_CREATE);
+    }
+
+    @GetMapping("/{meetupId}")
+    public Response<MeetupDetailOutputDto> getMeetup(@PathVariable Long meetupId) {
+        return new Response<MeetupDetailOutputDto>(meetupService.getMeetupDetail(meetupId),
+                SuccessCode.SUCCESS_RETREIVE);
     }
 
     @PostMapping("/update")
