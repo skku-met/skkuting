@@ -11,6 +11,7 @@ import skkumet.skkuting.domain.UserAccount;
 import skkumet.skkuting.dto.CreateMeetupInputDto;
 import skkumet.skkuting.dto.CreateMeetupOutputDto;
 import skkumet.skkuting.dto.MeetupDto;
+import skkumet.skkuting.dto.UserAccountDto;
 import skkumet.skkuting.repository.MeetupRepository;
 import skkumet.skkuting.util.DomainException;
 import skkumet.skkuting.util.errorcode.MeetupErrorCode;
@@ -25,8 +26,8 @@ public class MeetupService {
 
     public CreateMeetupOutputDto createMeetup(CreateMeetupInputDto dto) {
         Meetup meetup = dto.toEntity();
-        meetupRepository.save(meetup);
-        meetupRelService.createHostRel(meetup);
+        Meetup savedEntity = meetupRepository.save(meetup);
+        meetupRelService.join(UserAccountDto.from(savedEntity.getHost()), savedEntity.getId());
         return CreateMeetupOutputDto.fromEntity(meetup);
     }
 

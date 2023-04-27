@@ -83,12 +83,12 @@ public class Meetup extends AuditingFields {
             throw new RuntimeException("밋업 호스트는 최초 설정 이후 변경 불가능.");
         }
         this.userJoinedList.add(
-                UserMeetupRel.builder().userAccount(host).isAllowed(true).build());
+                UserMeetupRel.builder().userAccount(host).allowed(true).build());
     }
 
     public boolean isUserJoined(String userId) {
         return this.getUserJoinedList().stream().anyMatch(
-                o -> o.isAllowed() && o.getUserAccount().getEmail() == userId);
+                o -> o.getAllowed() && o.getUserAccount().getEmail() == userId);
     }
 
     public void closeRecruitByHost(UserAccount host) {

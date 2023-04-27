@@ -9,7 +9,7 @@ public enum AccountErrorCode implements ErrorCode {
     UNAUTHORIZED(401, "003", "인증이 되지 않았습니다."),
     ACCOUNT_NOT_FOUND(404, "004", "해당 계정은 존재하지 않습니다."),
     TOKEN_NOT_EXISTS(404, "005", "해당 토큰은 존재하지 않습니다."),
-    ;
+    NOT_A_HOST(404, "006", "해당 모임의 호스트가 아닙니다.");
 
     private final String codePrefix = "ACCOUNT-";
     private Integer httpStatus;
