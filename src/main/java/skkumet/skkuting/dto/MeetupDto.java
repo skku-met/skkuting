@@ -1,10 +1,13 @@
 package skkumet.skkuting.dto;
 
 import java.time.LocalDateTime;
+
+import lombok.Builder;
 import skkumet.skkuting.domain.Meetup;
 import skkumet.skkuting.dto.constant.AuthorizingPolicy;
 import skkumet.skkuting.dto.constant.MeetupStatus;
 
+@Builder
 public record MeetupDto(Long id, String title, String content, Integer max_member,
                 Integer min_member, LocalDateTime start_date,
                 String duration, String place, AuthorizingPolicy authorizingPolicy,
@@ -32,7 +35,7 @@ public record MeetupDto(Long id, String title, String content, Integer max_membe
         public Meetup toEntity() {
                 return Meetup.of(title, content, max_member, min_member, start_date,
                                 duration, place, authorizingPolicy, meetupStatus,
-                                UserAccountDto.toEntity(host));
+                                host.toEntity());
         }
 
         public static MeetupDto from(Meetup meetup) {

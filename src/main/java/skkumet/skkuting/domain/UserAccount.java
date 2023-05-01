@@ -1,6 +1,7 @@
 package skkumet.skkuting.domain;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -52,5 +53,18 @@ public class UserAccount extends AuditingFields {
 
     public static UserAccount of(String email) {
         return new UserAccount(email, null, null, null, null, null, null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserAccount that = (UserAccount) o;
+        return getEmail().equals(that.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmail());
     }
 }

@@ -15,7 +15,7 @@ public class MeetupTest {
 
     Meetup.MeetupBuilder builderWithHost() {
         Set<UserMeetupRel> list = Set.of(
-                UserMeetupRel.builder().userAccount(host).isAllowed(true).build());
+                UserMeetupRel.builder().userAccount(host).allowed(true).build());
 
         return Meetup.builder()
                 .host(host)
@@ -33,7 +33,7 @@ public class MeetupTest {
                 .contains(host);
         Assertions.assertThat(
                 meetup.getUserJoinedList().stream()
-                        .anyMatch((o) -> o.isAllowed() & o.getUserAccount() == host));
+                        .anyMatch((o) -> o.getAllowed() & o.getUserAccount() == host));
     }
 
     @Test
