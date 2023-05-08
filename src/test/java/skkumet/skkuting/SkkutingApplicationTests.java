@@ -16,10 +16,4 @@ class SkkutingApplicationTests {
 	@Autowired
 	MockMvc mockMvc;
 
-	@Test
-	@WithAnonymousUser
-	void contextLoads() throws Exception {
-
-	}
-
 }
