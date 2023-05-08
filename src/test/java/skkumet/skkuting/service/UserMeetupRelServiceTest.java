@@ -114,7 +114,7 @@ class UserMeetupRelServiceTest {
                 .allowed(false)
                 .build();
 
-        when(userMeetupRelRepository.findUserMeetupRelByMeetupAndUserAccountEmail(meetupId,userEmail)).thenReturn(Optional.of(userMeetupRel));
+        when(userMeetupRelRepository.findUserMeetupRelByMeetupIdAndUserAccountEmail(meetupId,userEmail)).thenReturn(Optional.of(userMeetupRel));
 
         //when
         ResponseEntity<UserMeetupRelDto> response = sut.acceptjoinedUser(UserAccountDto.from(userAccount), meetupId, userEmail);

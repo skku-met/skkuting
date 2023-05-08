@@ -22,7 +22,6 @@ services:
       - ${MYSQL_TCP_PORT}:${MYSQL_TCP_PORT}
       - ${MYSQLX_TCP_PORT}:${MYSQLX_TCP_PORT}
 
-
   cache:
     container_name: skkuting_cache
     image: redis:latest
